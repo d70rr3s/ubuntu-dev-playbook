@@ -1,0 +1,58 @@
+---
+- hosts: all
+  become: yes
+
+  vars_files:
+    - vars/main.yml
+    - default.config.yml
+
+  pre_tasks:
+    - name: Include OS-specific variables.
+      include_vars: "{{ ansible_os_family }}.yml"
+
+    - include: tasks/hostname.yml
+
+    - include: tasks/init-debian.yml
+      when: ansible_os_family == 'Debian'
+      static: no
+
+    - name: Ensure PHP version -specific workspace directory exists.
+      file:
+        path: "/root/php{{ php_version }}"
+        state: directory
+        mode: 0775
+
+    - name: Ensure SSH server is installed
+      apt: name=openssh-server state=installed
+      when: extra_security_enabled
+
+  roles:
+    # Essential roles.
+    - geerlingguy.firewall
+    - geerlingguy.git
+    - geerlingguy.postfix
+    - geerlingguy.php
+    - geerlingguy.php-pecl
+    - geerlingguy.composer
+    - geerlingguy.docker
+    - geerlingguy.daemonize
+    - geerlingguy.java
+
+    # Conditionally-installed roles.
+    - role: geerlingguy.php-xdebug
+      workspace: "/root/php{{ php_version }}"
+      when: '"xdebug" in installed_extras'
+    - { role: geerlingguy.nodejs, when: '"nodejs" in installed_extras' }
+    - { role: geerlingguy.ruby, when: '"ruby" in installed_extras' }
+    - { role: alban.andrieu.jmeter, when: '"jmeter" in installed_extras' }
+
+    # Roles for security and stability on production.
+    - { role: geerlingguy.security, when: extra_security_enabled }
+
+  tasks:
+    - include: tasks/sshd.yml
+    - include: tasks/extras.yml
+    - include: tasks/www.yml
+    - include: tasks/cron.yml
+    - include: tasks/utilities.yml
+    - include: tasks/tweaks.yml

@@ -1,0 +1,39 @@
+
+# This is Git's per-user configuration file.
+[alias]
+  last = log -1 --stat
+  cp = cherry-pick
+  co = checkout
+  cl = clone
+  ci = commit
+  st = status -sb
+  br = branch
+  unstage = reset HEAD --
+  undo = reset --soft HEAD~1
+  dc = diff --cached
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset' --abbrev-commit --date=relative --all
+  find = log --pretty=\"format:%Cgreen%H %Cblue%s\" --name-status --grep
+  addu = add -u
+  mg = merge --no-ff
+  sm = submodule
+  smup = submodule foreach 'latesttag=$(git describe --tags);echo checking out ${latesttag};git checkout ${latesttag}'
+[color]
+  ; I want colors!
+  ui = always
+[push]
+  default = simple
+  required = true
+[core]
+  excludesfile = ~/.gitignore_global
+  editor = vim
+[diff]
+  tool = vimdiff
+[merge]
+  tool = vimmerge
+[mergetool "meld"]
+	path = /usr/bin/meld
+[user]
+	email = {{ git_email }}
+	name = {{ git_fullname }}
+[credential]
+	helper = store

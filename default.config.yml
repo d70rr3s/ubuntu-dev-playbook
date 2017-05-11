@@ -1,0 +1,180 @@
+---
+# System configuration
+current_user: "dtorresr"
+become_user: "{{ current_user }}"
+git_username: "{{ current_user }}"
+git_fullname: "Dennis A. Torres Rodriguez"
+git_email: "d70rr3s@gmail.com"
+hostname: "{{ current_user }}"
+#ssh_home: "{{ current_user }}"
+# When using Apache where to look for projects
+local_docroot: "/home/{{ current_user }}"
+
+# Tweaks
+tweaks_use_material_design: true
+tweaks_disable_guest_account: true
+tweaks_sudo_insults: true
+
+# Applications
+user_applications:
+  - battery-monitor
+  - guake
+  - indicator-keylock
+  - google-chrome-stable
+  - putty
+  - filezilla
+
+  # Comment out any extra utilities you don't want to install. If you don't want
+  # to install *any* extras, set this value to an empty set, e.g. `[]`.
+installed_extras:
+  - java
+  - nodejs
+  - ruby
+  - xdebug
+  - jmeter
+
+# Extra packages (add here any OS package you need)
+extra_packages:
+  - htop
+  - unity-tweak-tool
+  - gparted
+  - nfs-kernel-server
+  - liberror-perl
+  - libqt5x11extras5
+  - libsdl1.2debian
+  - python-pip
+  - pulseaudio
+
+# Enable basic server security configuration
+extra_security_enabled: true
+
+firewall_allowed_tcp_ports:
+  - "22"
+  - "25"
+  - "80"
+  - "81"
+  - "111"
+  - "443"
+  - "1110"
+  - "1197"
+  - "2049"
+  - "2222"
+  - "3306"
+  - "4045"
+  - "4444"
+  - "8025"
+  - "8080"
+  - "8443"
+  - "8983"
+  - "9000"
+  - "9200"
+  - "32764"
+  - "32765"
+  - "32766"
+  - "32767"
+  - "32768"
+  - "32769"
+firewall_allowed_udp_ports:
+  - "111"
+  - "1110"
+  - "1197"
+  - "2049"
+  - "3306"
+  - "4045"
+  - "9000"
+  - "32764"
+  - "32765"
+  - "32766"
+  - "32767"
+  - "32768"
+  - "32769"
+firewall_log_dropped_packets: true
+firewall_disable_firewalld: true
+firewall_disable_ufw: true
+
+# PHP Configuration. Currently-supported versions: 5.6, 7.0, 7.1.
+# See version-specific notes: http://docs.drupalvm.com/en/latest/configurations/php/
+php_version: "7.0"
+php_packages_extra:
+  - "php{{ php_version }}-bcmath"
+  - "php{{ php_version }}-bz2"
+  - "php{{ php_version }}-ldap"
+  - "php{{ php_version }}-mysql"
+  - "php{{ php_version }}-pgsql"
+  - "php{{ php_version }}-soap"
+php_enable_webserver: false
+php_install_recommends: no
+php_memory_limit: "192M"
+php_display_errors: "On"
+php_display_startup_errors: "On"
+php_realpath_cache_size: "1024K"
+php_sendmail_path: "/usr/sbin/sendmail -t -i"
+php_opcache_enabled_in_ini: true
+php_opcache_memory_consumption: "192"
+php_opcache_max_accelerated_files: 4096
+php_max_input_vars: "4000"
+
+# XDebug configuration. XDebug is disabled by default for better performance.
+php_xdebug_default_enable: 0
+php_xdebug_coverage_enable: 0
+php_xdebug_cli_enable: 1
+php_xdebug_remote_enable: 1
+php_xdebug_remote_connect_back: 1
+# Use PHPSTORM for PHPStorm, sublime.xdebug for Sublime Text.
+php_xdebug_idekey: PHPSTORM
+php_xdebug_max_nesting_level: 256
+
+php_enable_php_fpm: false
+# We must set the port other than 9000 to avoid collisions wwith XDebug
+php_fpm_listen: "127.0.0.1:9090"
+
+composer_path: /usr/bin/composer
+composer_home_path: "/home/{{ current_user }}/.composer"
+composer_home_owner: "{{ current_user }}"
+composer_home_group: "{{ current_user }}"
+composer_global_packages:
+  - { name: hirak/prestissimo, release: '^0.3' }
+  - { name: deployer/deployer, release: '^3.3' }
+  - { name: consolidation/robo, release: '^1.0.0' }
+
+# Node.js configuration (if enabled above).
+# Valid examples: "0.10", "0.12", "4.x", "5.x".
+nodejs_version: "5.x"
+nodejs_npm_global_packages:
+  - name: bower
+  - name: grunt
+  - name: gulp
+  - name: yo
+
+nodejs_install_npm_user: "{{ current_user }}"
+npm_config_prefix: "/home/{{ current_user }}/.npm-global"
+
+# Ruby Configuration (if enabled above).
+ruby_install_gems_user: "{{ current_user }}"
+ruby_install_gems:
+  - compass
+  - bourbon
+  - neat
+  - bitters
+  - refills
+
+# JMeter configuration
+jmeter_enabled: yes
+
+jmeter_version: "3.0"
+jmeter_name: "apache-jmeter-{{ jmeter_version }}"
+jmeter_archive: "{{ jmeter_name }}.zip"
+#jmeter_url: "http://mirrors.ircam.fr/pub/apache/jmeter/binaries/{{ jmeter_archive }}"
+jmeter_url: "https://archive.apache.org/dist/jmeter/binaries/{{ jmeter_archive }}"
+
+user: "{{ current_user }}"
+jmeter_owner: "{{ user }}"
+jmeter_group: "{{ jmeter_owner }}"
+home: '~'
+jmeter_owner_home: "{{ home }}"
+#jmeter_base_dir: "/usr/share/jmeter"
+jmeter_base_dir: "/usr/local/jmeter"
+jmeter_home_dir: "{{ home }}/.jmeter"
+jmeter_configuration: "{{ jmeter_base_dir }}/{{ jmeter_name }}/bin/jmeter.properties"
+
+jmeter_dir_tmp: "/tmp"
