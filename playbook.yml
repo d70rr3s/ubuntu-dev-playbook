@@ -39,12 +39,8 @@
     - geerlingguy.java
 
     # Conditionally-installed roles.
-    - role: geerlingguy.php-xdebug
-      workspace: "/root/php{{ php_version }}"
-      when: '"xdebug" in installed_extras'
     - { role: geerlingguy.nodejs, when: '"nodejs" in installed_extras' }
     - { role: geerlingguy.ruby, when: '"ruby" in installed_extras' }
-    - { role: alban.andrieu.jmeter, when: '"jmeter" in installed_extras' }
 
     # Roles for security and stability on production.
     - { role: geerlingguy.security, when: extra_security_enabled }
