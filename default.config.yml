@@ -30,8 +30,7 @@ installed_extras:
   - java
   - nodejs
   - ruby
-  - xdebug
-  - jmeter
+  - docker
 
 # Extra packages (add here any OS package you need)
 extra_packages:

@@ -34,11 +34,11 @@
     - geerlingguy.php
     - geerlingguy.php-pecl
     - geerlingguy.composer
-    - geerlingguy.docker
     - geerlingguy.daemonize
     - geerlingguy.java
 
     # Conditionally-installed roles.
+    - { role: geerlingguy.docker, when: '"docker" in installed_extras' }
     - { role: geerlingguy.nodejs, when: '"nodejs" in installed_extras' }
     - { role: geerlingguy.ruby, when: '"ruby" in installed_extras' }
 
