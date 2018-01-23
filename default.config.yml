@@ -1,10 +1,10 @@
 ---
 # System configuration
-current_user: "dtorresr"
+current_user: "USER_UNAME"
 become_user: "{{ current_user }}"
 git_username: "{{ current_user }}"
-git_fullname: "Dennis A. Torres Rodriguez"
-git_email: "d70rr3s@gmail.com"
+git_fullname: "USER_FULLNAME"
+git_email: "USER_EMAIL"
 hostname: "{{ current_user }}"
 #ssh_home: "{{ current_user }}"
 # When using Apache where to look for projects
