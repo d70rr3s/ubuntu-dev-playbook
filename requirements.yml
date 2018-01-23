@@ -6,7 +6,7 @@
 - src: geerlingguy.daemonize
   version: 1.2.0
 - src: geerlingguy.firewall
-  version: 2.3.4
+  version: 2.3.0
 - src: geerlingguy.git
   version: 1.4.0
 - src: geerlingguy.java
