@@ -113,16 +113,6 @@ php_opcache_memory_consumption: "192"
 php_opcache_max_accelerated_files: 4096
 php_max_input_vars: "4000"
 
-# XDebug configuration. XDebug is disabled by default for better performance.
-php_xdebug_default_enable: 0
-php_xdebug_coverage_enable: 0
-php_xdebug_cli_enable: 1
-php_xdebug_remote_enable: 1
-php_xdebug_remote_connect_back: 1
-# Use PHPSTORM for PHPStorm, sublime.xdebug for Sublime Text.
-php_xdebug_idekey: PHPSTORM
-php_xdebug_max_nesting_level: 256
-
 php_enable_php_fpm: false
 # We must set the port other than 9000 to avoid collisions wwith XDebug
 php_fpm_listen: "127.0.0.1:9090"
@@ -156,24 +146,3 @@ ruby_install_gems:
   - neat
   - bitters
   - refills
-
-# JMeter configuration
-jmeter_enabled: yes
-
-jmeter_version: "3.0"
-jmeter_name: "apache-jmeter-{{ jmeter_version }}"
-jmeter_archive: "{{ jmeter_name }}.zip"
-#jmeter_url: "http://mirrors.ircam.fr/pub/apache/jmeter/binaries/{{ jmeter_archive }}"
-jmeter_url: "https://archive.apache.org/dist/jmeter/binaries/{{ jmeter_archive }}"
-
-user: "{{ current_user }}"
-jmeter_owner: "{{ user }}"
-jmeter_group: "{{ jmeter_owner }}"
-home: '~'
-jmeter_owner_home: "{{ home }}"
-#jmeter_base_dir: "/usr/share/jmeter"
-jmeter_base_dir: "/usr/local/jmeter"
-jmeter_home_dir: "{{ home }}/.jmeter"
-jmeter_configuration: "{{ jmeter_base_dir }}/{{ jmeter_name }}/bin/jmeter.properties"
-
-jmeter_dir_tmp: "/tmp"
