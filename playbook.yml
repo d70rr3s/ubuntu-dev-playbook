@@ -28,8 +28,8 @@
 
   roles:
     # Essential roles.
-    - geerlingguy.firewall
     - geerlingguy.git
+    - geerlingguy.firewall
     - geerlingguy.postfix
     - geerlingguy.php
     - geerlingguy.php-pecl
