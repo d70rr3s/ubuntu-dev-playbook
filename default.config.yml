@@ -127,7 +127,8 @@ composer_global_packages:
 
 # Node.js configuration (if enabled above).
 # Valid examples: "0.10", "0.12", "4.x", "5.x".
-nodejs_version: "5.x"
+# NOTE! Use 6.x version for Ubuntu 17.10.
+nodejs_version: "6.x"
 nodejs_npm_global_packages:
   - name: bower
   - name: grunt
