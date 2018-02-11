@@ -7,9 +7,6 @@
     - default.config.yml
 
   pre_tasks:
-    - name: Include OS-specific variables.
-      include_vars: "{{ ansible_os_family }}.yml"
-
     - include: tasks/hostname.yml
 
     - include: tasks/init-debian.yml
@@ -29,26 +26,33 @@
   roles:
     # Essential roles.
     - geerlingguy.git
-    - geerlingguy.firewall
     - geerlingguy.postfix
     - geerlingguy.php
     - geerlingguy.php-pecl
     - geerlingguy.composer
     - geerlingguy.daemonize
     - geerlingguy.java
+    - andrewrothstein.vagrant
+    - geerlingguy.nfs
+    - gantsign.oh-my-zsh
 
-    # Conditionally-installed roles.
+    # Virtualization.
     - { role: geerlingguy.docker, when: '"docker" in installed_extras' }
+    - { role: FGtatsuro.virtualbox, when: '"virtualbox" in installed_extras' }
+
+    # Languages.
     - { role: geerlingguy.nodejs, when: '"nodejs" in installed_extras' }
     - { role: geerlingguy.ruby, when: '"ruby" in installed_extras' }
 
-    # Roles for security and stability on production.
+    # Editors and tools.
+    - { role: gantsign.atom, when: '"atom" in installed_extras' }
+    - { role: KeyboardInterrupt.sublime-text-3, when: '"sublime" in installed_extras' }
+    - { role: configure-sublime, when: '"sublime" in installed_extras' }
+    - { role: gantsign.terminator, when: '"terminator" in installed_extras' }
+
+    # Roles for security and stability.
+    - { role: geerlingguy.firewall, when: firewall_enabled }
     - { role: geerlingguy.security, when: extra_security_enabled }
 
-  tasks:
-    - include: tasks/sshd.yml
-    - include: tasks/extras.yml
-    - include: tasks/www.yml
-    - include: tasks/cron.yml
-    - include: tasks/utilities.yml
-    - include: tasks/tweaks.yml
+    # Post-execution tasks.
+    - { role: post-exec }

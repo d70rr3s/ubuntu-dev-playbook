@@ -1,0 +1,9 @@
+---
+disable_guest_account: false
+sudo_insults: true
+city: Zaragoza
+langcode: es
+toolbox_version: '1.6.2914'
+# Can be fount at https://download.jetbrains.com/toolbox/jetbrains-toolbox-VERSION.tar.gz.sha256
+toolbox_checksum:  'sha256:b634aeec655044a02361ca2541ea891a0b34019cc6ccfbef7a39824a00be5a10'
+temp_directory: '/home/{{ current_user }}/.temp'

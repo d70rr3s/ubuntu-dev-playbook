@@ -1,0 +1,16 @@
+---
+- name: Add alias to run last typed command as sudo
+  lineinfile:
+    dest: "/home/{{ current_user }}/.zshrc"
+    line: "alias fuck='sudo $(history -p \\!\\!)'"
+
+- name: Weather forcasting right in your CLI.
+  lineinfile:
+    dest: "/home/{{ current_user }}/.zshrc"
+    line: "alias weather='curl -4 wttr.in/{{ city }}?lang={{ langcode }}'"
+
+- name: Append more complex aliases from template.
+  blockinfile:
+    dest: "/home/{{ current_user }}/.zshrc"
+    block: "{{ lookup('template', 'aliases.j2') }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK FOR ALIASES"

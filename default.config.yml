@@ -1,52 +1,52 @@
 ---
 # System configuration
-current_user: "USER_UNAME"
 become_user: "{{ current_user }}"
 git_username: "{{ current_user }}"
-git_fullname: "USER_FULLNAME"
-git_email: "USER_EMAIL"
+git_fullname: "{{ full_name }}"
+git_email: "{{ email }}"
 hostname: "{{ current_user }}"
-#ssh_home: "{{ current_user }}"
-# When using Apache where to look for projects
-local_docroot: "/home/{{ current_user }}"
-
-# Tweaks
-tweaks_use_material_design: true
-tweaks_disable_guest_account: true
-tweaks_sudo_insults: true
 
 # Applications
 user_applications:
   - battery-monitor
-  - guake
   - indicator-keylock
+  - fzf
   - google-chrome-stable
   - putty
   - filezilla
+  - toolboxapp   # Jetbrains stack
 
-  # Comment out any extra utilities you don't want to install. If you don't want
-  # to install *any* extras, set this value to an empty set, e.g. `[]`.
+# Comment out any extra utilities you don't want to install. If you don't want
+# to install *any* extras, set this value to an empty set, e.g. `[]`.
 installed_extras:
   - java
   - nodejs
   - ruby
   - docker
+  - virtualbox
+  - sublime
+  - atom
+  - terminator
 
-# Extra packages (add here any OS package you need)
+# Extra packages (add here any OS package you need),
+# keep in mind your OS distribution for some packages.
 extra_packages:
   - htop
-  - unity-tweak-tool
   - gparted
-  - nfs-kernel-server
   - liberror-perl
   - libqt5x11extras5
   - libsdl1.2debian
   - python-pip
   - pulseaudio
+  - meld
+  - vim
+  - synapse
+  - autojump
 
 # Enable basic server security configuration
 extra_security_enabled: true
 
+firewall_enabled: false
 firewall_allowed_tcp_ports:
   - "22"
   - "25"
@@ -123,8 +123,8 @@ composer_home_owner: "{{ current_user }}"
 composer_home_group: "{{ current_user }}"
 composer_global_packages:
   - { name: hirak/prestissimo, release: '^0.3' }
-  - { name: deployer/deployer, release: '^3.3' }
-  - { name: consolidation/robo, release: '^1.0.0' }
+  - { name: deployer/deployer, release: '^4' }
+  - { name: consolidation/robo, release: '^1' }
 
 # Node.js configuration (if enabled above).
 # Valid examples: "0.10", "0.12", "4.x", "5.x".
@@ -146,3 +146,40 @@ ruby_install_gems:
   - neat
   - bitters
   - refills
+
+# Vagrant
+vagrant_version : '2.0.2'
+vagrant_platform : x86_64
+
+# VirtualBox
+virtualbox_apt_package: virtualbox-5.1
+
+# Atom
+users:
+  - username: {{ current_user }}
+    atom_packages:
+      - minimap
+      - linter
+      - atom-beautify
+      - file-icons
+    atom_config:
+      "*":
+        core:
+          projectHome: "/home/{{ current_user }}/workspace"
+        editor:
+          showIndentGuide: true
+          showInvisibles: true
+
+# Oh-My-ZSH
+# Important: oh-my-zsh is installed per user so you need to specify the users to install it for.
+users:
+  - username: {{ current_user }}
+    oh_my_zsh:
+      theme: bureau
+      plugins:
+        - git
+        - vagrant
+        - Composer
+        - vi-mode
+        - vi-interaction
+        - autojump

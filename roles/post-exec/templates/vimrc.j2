@@ -1,0 +1,290 @@
+"
+"   ██╗   ██╗ ██╗ ███╗   ███╗ ██████╗   ██████╗
+"   ██║   ██║ ██║ ████╗ ████║ ██╔══██╗ ██╔════╝
+"   ██║   ██║ ██║ ██╔████╔██║ ██████╔╝ ██║
+"   ╚██╗ ██╔╝ ██║ ██║╚██╔╝██║ ██╔══██╗ ██║
+" ██╗╚████╔╝  ██║ ██║ ╚═╝ ██║ ██║  ██║ ╚██████╗
+" ╚═╝ ╚═══╝   ╚═╝ ╚═╝     ╚═╝ ╚═╝  ╚═╝  ╚═════╝
+"
+"
+
+if has('nvim')
+    if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+        silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
+                    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        autocmd VimEnter * PlugInstall
+    endif
+"    call plug#begin('~/.local/share/nvim/site/autoload/plug.vim')
+else
+    if empty(glob('~/.vim/autoload/plug.vim'))
+        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        autocmd VimEnter * PlugInstall
+    endif
+"    call plug#begin()
+endif
+
+call plug#begin()
+Plug 'airblade/vim-gitgutter'
+Plug 'godlygeek/csapprox'
+Plug 'kristijanhusak/vim-hybrid-material'
+Plug 'majutsushi/tagbar'
+Plug 'mxw/vim-jsx'
+Plug 'nestorsalceda/vim-strip-trailing-whitespaces'
+Plug 'pangloss/vim-javascript'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree', { 'on': ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-sensible'
+Plug 'vim-airline/vim-airline'
+Plug 'wookiehangover/jshint.vim'
+Plug 'elentok/plaintasks.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'ctrlpvim/ctrlp.vim', { 'on': 'CtrlP' }
+Plug 'wincent/ferret', { 'on': ['Ack', 'Acks'] }
+Plug 'Valloric/YouCompleteMe'
+Plug 'chriskempson/base16-vim'
+Plug 'artur-shaik/vim-javacomplete2'
+Plug 'mjoey/vim-magento'
+Plug 'joonty/vdebug'
+call plug#end()
+
+set t_Co=256
+
+if has("gui_running")
+    set guifont=Monaco:h13
+endif
+
+filetype plugin indent on
+highlight clear SignColumn
+let NERDTreeIgnore=['\.pyc$', '\.orig$']
+let mapleader=","
+" Colorscheme
+set background=dark
+colorscheme base16-default-dark
+highlight Normal ctermbg=none
+set clipboard=unnamed
+set expandtab
+set gcr=a:blinkon0              "Disable cursor blink
+set hlsearch
+set ignorecase
+set list
+set listchars=tab:▸\ ,eol:¬
+set mouse=a
+set nobackup
+set noswapfile
+" disable folding by default...
+set nofoldenable
+"set foldmethod=syntax
+"set foldenable
+"syn region foldImports start="import" end=/import.*\n^$/ fold keepend
+
+set nowb
+set number
+set path+=**
+set sessionoptions-=options  " Don't save options
+set shiftwidth=4
+set shortmess+=I
+set showcmd                     "Show incomplete cmds down the bottom
+set showmatch
+set showmode                    "Show current mode down the bottom
+set smartcase
+set splitbelow
+set splitright
+set ssop-=buffers
+set statusline+=%#warningmsg#
+set statusline+=%*
+set tabstop=4
+set wildignore+=*.pyc,node_modules,*.egg-info,*/*session.vim
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,*/dist/*
+set wildignore+=*.rar,*.war,*/target/*
+set wildmenu
+set wildmode=list:longest
+
+"Goyo options
+let g:goyo_width = 160
+
+" Eclim
+let g:EclimCompletionMethod = 'omnifunc'
+
+"CtrlP
+"http://stackoverflow.com/a/22784889/4047261
+let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+if executable('ag')
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+endif
+
+" netrw options
+"let g:netrw_banner = 0
+"let g:netrw_liststyle = 3
+"let g:netrw_browse_split = 4
+"let g:netrw_altv = 1
+"let g:netrw_winsize = 15
+"let g:netrw_list_hide=netrw_gitignore#Hide()
+"let g:netrw_list_hide.=',\(^\|\s\s\)\zs\.\S\+'
+
+" airline options
+if !exists('g:airline_symbols')
+    let g:airline_symbols = {}
+endif
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_symbols.branch = '⎇'
+let g:airline_symbols.paste = 'ρ'
+let g:airline_symbols.whitespace = 'Ξ'
+"let g:airline_theme = "hybrid"
+
+"jsx syntax not only on jsx extension
+let g:jsx_ext_required = 0
+
+"tagbar options
+let g:tagbar_compact = 1
+let g:tagbar_sort = 0
+
+"hybrid colors opts
+let g:hybrid_custom_term_colors = 1
+
+" lang options
+let g:myLang = 0
+let g:myLangList = ['nospell', 'en_us', 'es_es']
+
+cmap w!! w !sudo tee % >/dev/null
+
+imap jj <Esc>
+
+map <C-x> :NERDTreeToggle<CR>
+map <F4> :<C-U>call MySpellLang()<CR>
+map <F8> :<C-U>call WritingMode()<CR>
+
+"nmap <leader>, :find<space>
+"nmap <leader>e :CtrlPBuffer<CR>
+nmap <leader>, :CtrlP<CR>
+nmap <leader>b :ls<CR>:b<Space>
+nmap <leader>d :bd<CR>
+nmap <leader>f :NERDTreeFind<CR>
+nmap <leader>n :bn<CR>
+nmap <leader>p :bp<CR>
+nmap <leader>q :q<CR>
+nmap <leader>r :bro ol<CR>
+nmap <leader>s :w<CR>
+nmap <leader>sa :wa<CR>
+nmap <leader>t :TagbarToggle<CR>
+
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+nnoremap <leader>] :tag /<c-r>=expand('<cword>')<CR><CR>
+nnoremap <silent> + :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> - :exe "resize " . (winheight(0) * 2/3)<CR>
+
+
+"autocmd BufWritePre *.js FormatJS
+
+"disable conceal crazy feature!
+set cole=0
+au FileType * setl cole=0
+
+" https://github.com/cfenollosa/dotfiles/blob/master/.vimrc
+if has("autocmd")
+    " Highlight TODO, FIXME, NOTE, etc.
+    if v:version > 701
+        autocmd Syntax * call matchadd('Todo',  '\W\zs\(TODO\|FIXME\|CHANGED\|XXX\|BUG\|HACK\)')
+        autocmd Syntax * call matchadd('Debug', '\W\zs\(NOTE\|INFO\|IDEA\)')
+    endif
+endif
+
+""""""""""""""""""""""""""""""""""""""""""""""""""
+" Tell vim to remember certain things when we exit
+" http://vim.wikia.com/wiki/VimTip80
+""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"  '10 : marks will be remembered for up to 10 previously edited files
+"  "100 : will save up to 100 lines for each register
+"  :20 : up to 20 lines of command-line history will be remembered
+"  % : saves and restores the buffer list
+"  n... : where to save the viminfo files
+set viminfo='10,\"100,:20,%,n~/.viminfo
+
+" when we reload, tell vim to restore the cursor to the saved position
+augroup JumpCursorOnEdit
+    au!
+    autocmd BufReadPost *
+                \ if expand("<afile>:p:h") !=? $TEMP |
+                \ if line("'\"") > 1 && line("'\"") <= line("$") |
+                \ let JumpCursorOnEdit_foo = line("'\"") |
+                \ let b:doopenfold = 1 |
+                \ if (foldlevel(JumpCursorOnEdit_foo) > foldlevel(JumpCursorOnEdit_foo - 1)) |
+                \ let JumpCursorOnEdit_foo = JumpCursorOnEdit_foo - 1 |
+                \ let b:doopenfold = 2 |
+                \ endif |
+                \ exe JumpCursorOnEdit_foo |
+                \ endif |
+                \ endif
+    " Need to postpone using "zv" until after reading the modelines.
+    autocmd BufWinEnter *
+                \ if exists("b:doopenfold") |
+                \ exe "normal zv" |
+                \ if(b:doopenfold > 1) |
+                \ exe "+".1 |
+                \ endif |
+                \ unlet b:doopenfold |
+                \ endif
+augroup END
+
+"autocmd VimLeave * call SaveSess()
+"autocmd VimEnter * nested call RestoreSess()
+
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
+
+com! FormatHTML %!tidy --indent auto --indent-spaces 4 --wrap 200 --quiet yes --show-body-only auto --show-errors 0 --tidy-mark no
+com! FormatJS   %!js-beautify --indent-size=4
+com! FormatJSON %!python -m json.tool
+
+function! MySpellLang()
+    "loop through languages
+    if g:myLang == 0 | setlocal nospell | endif
+    if g:myLang == 1 | let &l:spelllang = g:myLangList[g:myLang] |
+        setlocal spell | endif
+    if g:myLang == 2 | let &l:spelllang = g:myLangList[g:myLang] |
+        setlocal spell | endif
+    echomsg 'language:' g:myLangList[g:myLang]
+    let g:myLang = g:myLang + 1
+    if g:myLang >= len(g:myLangList) | let g:myLang = 0 | endif
+endfunction
+
+function! WritingMode()
+    if (&foldcolumn != 6)
+        "        set laststatus=0
+        set numberwidth=6
+        set foldcolumn=6
+        set noruler
+        hi FoldColumn ctermbg=none
+        hi LineNr ctermfg=0 ctermbg=none
+        hi NonText ctermfg=0
+    else
+        "        set laststatus=2
+        set numberwidth=4
+        set foldcolumn=0
+        set ruler
+        execute 'colorscheme ' . g:colors_name
+    endif
+endfunction
+
+"fu! SaveSess()
+    "execute 'mksession! %:p:h/.localVimSession'
+"endfunction
+
+"fu! RestoreSess()
+    "if filereadable ('%:p:h/.localVimSession')
+        "execute 'so %:p:h/.localVimSession'
+        "if bufexists(1)
+            "for l in range(1, bufnr('$'))
+                "if bufwinnr(l) == -1
+                    "exec 'sbuffer ' . l
+                "endif
+            "endfor
+        "endif
+    "endif
+"endfunction
+

@@ -8,7 +8,7 @@
 
 - name: Set SSH home directory.
   lineinfile:
-    dest: "/home/{{ current_user }}/.bashrc"
+    dest: "/home/{{ current_user }}/.profile"
     state: present
     create: yes
     regexp: "^SSH_HOME="

@@ -1,0 +1,61 @@
+---
+- name: Disable guest account
+  lineinfile:
+    dest: /etc/lightdm/lightdm.conf.d/99-no-guest.conf
+    create: yes
+    line: "[SeatDefaults]\nallow-guest=false\n"
+    mode: 0744
+  when: disable_guest_account == true
+
+- name: You shall not 'sudo' in vane
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: "^Defaults *env_reset"
+    line: "Defaults    env_reset,insults"
+    validate: "visudo -cf %s"
+  when: sudo_insults == true
+
+- name: Set up Git global configuration
+  template:
+    src: gitconfig.j2
+    dest: "/home/{{ current_user }}/.gitconfig"
+    owner: "{{ current_user }}"
+    group: "{{ current_user }}"
+    mode: 0744
+
+- name: Set up Vim configuration
+  template:
+    src: .vimrc.j2
+    dest: "/home/{{ current_user }}/.vimrc"
+    owner: "{{ current_user }}"
+    group: "{{ current_user }}"
+    mode: 0744
+
+- name: Set up ZSH and some variables.
+  blockinfile:
+    dest: "/home/{{ current_user }}/.zshrc"
+    block: "{{ lookup('template', 'zshrc.j2') }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK FOR ZSH"
+
+- name: Increment file watcher size up to 512Kb
+  lineinfile:
+    dest: /etc/sysctl.d/99-inotify.conf
+    create: yes
+    line: "fs.inotify.max_user_watches = 524288"
+    mode: 0744
+
+- name: Reload sysctl configuration
+  command: sysctl -p --system
+
+- name: Install extra apt packages (if any are configured).
+  apt: "name={{ item }} state=installed"
+  with_items: "{{ extra_packages | list }}"
+  when: ansible_os_family == 'Debian' and extra_packages | length
+
+- include: applications.yml
+  when: user_applications|length > 0
+
+- include: sshd.yml
+
+- include: cron.yml

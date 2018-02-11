@@ -1,8 +1,39 @@
 ---
-_devtool_docroots:
-  - "{{ adminer_install_dir }}"
-  - "{{ pimpmylog_install_dir }}"
-  - "{{ php_xhprof_html_dir }}"
-  - "{{ dashboard_install_dir|default('') }}"
+# Vagrant.
+vagrant_version : '2.0.2'
+vagrant_platform : x86_64
+vagrant_checksums:
+  # https://releases.hashicorp.com/vagrant/2.0.2/vagrant_2.0.2_SHA256SUMS
+  '2.0.2':
+    deb: 'sha256:df8dfb0176d62f0d20d11caec51e53bad57ea2bcc3877427841658702906754f'
+    dmg: 'sha256:c5dd5b8c7193844a6cc5b6f79b0c878cd144f1eebbac72ad70de0f3cfdb31d93'
+    rpm: 'sha256:3f4379d95474ec00b195a133ef2559ba1dff4354fe01e8b3b5addc2863b8b655'
+  # https://releases.hashicorp.com/vagrant/2.0.1/vagrant_2.0.1_SHA256SUMS
+  '2.0.1':
+    deb: 'sha256:2f9498a83b3d650fcfcfe0ec7971070fcd3803fad6470cf7da871caf2564d84f'
+    dmg: 'sha256:07f7be3a457a8422d576e6371c8499fbdea411b02aecc7ea3c5258494514c5f2'
+    rpm: 'sha256:df28c4ba7420dc6983955cf3af66dddddd892ad852154e9b9dbcd1acbebc083c'
 
-drupalvm_user: "{{ ansible_ssh_user | default(ansible_env.SUDO_USER, true) | default(ansible_env.USER, true) | default(ansible_user_id) }}"
+# VirtualBox
+virtualbox_apt_package: virtualbox-5.1
+
+# Atom
+users:
+  - username: {{ current_user }}
+    atom_packages:
+      - minimap
+      - linter
+      - atom-beautify
+      - file-icons
+    atom_config:
+      "*":
+        core:
+          projectHome: "/home/{{ current_user }}/workspace"
+        editor:
+          showIndentGuide: true
+          showInvisibles: true
+
+# Oh-my-zsh
+oh_my_zsh_theme: robbyrussell
+oh_my_zsh_plugins:
+  - git
