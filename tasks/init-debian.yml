@@ -34,3 +34,9 @@
     owner: "{{ current_user }}"
     group: "{{ current_user }}"
     mode: 0744
+
+- name: Add an apt key for VirtualBox when using Ubuntu 17.10
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: A2F683C52980AECF
+  when: 'ansible_distribution == "Ubuntu" and ansible_distribution_version == "17.10"'
