@@ -59,6 +59,11 @@
   register: toolbox
   when: '"toolboxapp" in user_applications'
 
+- name: Install Vagrant plugins
+  command: "vagrant plugin install {{ item }}"
+  with_items: "{{ vagrant_plugins }}"
+  when: 'vagrant_plugins | length > 0 '
+
 - name: Download Toolbox App
   get_url:
     url: 'https://download.jetbrains.com/toolbox/jetbrains-toolbox-{{ toolbox_version }}.tar.gz'
