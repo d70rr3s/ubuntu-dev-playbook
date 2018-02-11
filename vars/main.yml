@@ -19,7 +19,7 @@ virtualbox_apt_package: virtualbox-5.1
 
 # Atom
 users:
-  - username: {{ current_user }}
+  - username: "{{ current_user }}"
     atom_packages:
       - minimap
       - linter
