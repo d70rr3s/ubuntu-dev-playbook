@@ -34,7 +34,8 @@
     - geerlingguy.java
     - andrewrothstein.vagrant
     - geerlingguy.nfs
-    - gantsign.oh-my-zsh
+    - role: gantsign.oh-my-zsh
+      users: oh_my_zsh_configuration
 
     # Virtualization.
     - { role: geerlingguy.docker, when: '"docker" in installed_extras' }
@@ -45,7 +46,9 @@
     - { role: geerlingguy.ruby, when: '"ruby" in installed_extras' }
 
     # Editors and tools.
-    - { role: gantsign.atom, when: '"atom" in installed_extras' }
+    - role: gantsign.atom
+      users: atom_configuration
+      when: '"atom" in installed_extras'
     - { role: KeyboardInterrupt.sublime-text-3, when: '"sublime" in installed_extras' }
     - { role: configure-sublime, when: '"sublime" in installed_extras' }
     - { role: gantsign.terminator, when: '"terminator" in installed_extras' }

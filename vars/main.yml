@@ -18,7 +18,7 @@ vagrant_checksums:
 virtualbox_apt_package: virtualbox-5.1
 
 # Atom
-users:
+atom_configuration:
   - username: "{{ current_user }}"
     atom_packages:
       - minimap

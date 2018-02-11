@@ -155,7 +155,7 @@ vagrant_platform : x86_64
 virtualbox_apt_package: virtualbox-5.1
 
 # Atom
-users:
+atom_configuration:
   - username: "{{ current_user }}"
     atom_packages:
       - minimap
@@ -172,7 +172,7 @@ users:
 
 # Oh-My-ZSH
 # Important: oh-my-zsh is installed per user so you need to specify the users to install it for.
-users:
+oh_my_zsh_configuration:
   - username: "{{ current_user }}"
     oh_my_zsh:
       theme: bureau
