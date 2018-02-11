@@ -1,6 +1,5 @@
 ---
 # System configuration
-become_user: "{{ current_user }}"
 git_username: "{{ current_user }}"
 git_fullname: "{{ full_name }}"
 git_email: "{{ email }}"
