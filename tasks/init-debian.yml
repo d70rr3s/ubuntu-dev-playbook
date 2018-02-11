@@ -25,3 +25,12 @@
   copy:
     content: "{{ hostname_fqdn }}\n"
     dest: /etc/mailname
+
+# @TODO Remove this once this is fixed https://github.com/geerlingguy/ansible-role-java/issues/48
+- name: Hack geerlingguy.java role for Ubuntu 17.10
+  template:
+    src: Ubuntu-17.10.j2
+    dest: "../roles/geerlingguy.java/vars/Ubuntu-17.10.yml"
+    owner: "{{ current_user }}"
+    group: "{{ current_user }}"
+    mode: 0744
