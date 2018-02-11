@@ -30,7 +30,7 @@
 - name: Hack geerlingguy.java role for Ubuntu 17.10
   template:
     src: Ubuntu-17.10.j2
-    dest: "../roles/geerlingguy.java/vars/Ubuntu-17.10.yml"
+    dest: "{{ playbook_dir }}/roles/geerlingguy.java/vars/Ubuntu-17.10.yml"
     owner: "{{ current_user }}"
     group: "{{ current_user }}"
     mode: 0744
