@@ -14,3 +14,8 @@ The *-K* option will prompt you for sudo password.
  * Detailed content list
  * Available vars and tweaks
  * Add more goodies
+
+# Known issues
+I'll do something with this later.
+
+* NodeJS 5.x (maybe others) version [issue](https://github.com/geerlingguy/ansible-role-nodejs/issues/3), solution delete registered repositories
