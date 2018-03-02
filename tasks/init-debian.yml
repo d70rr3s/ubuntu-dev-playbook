@@ -40,3 +40,9 @@
     keyserver: keyserver.ubuntu.com
     id: A2F683C52980AECF
   when: 'ansible_distribution == "Ubuntu" and ansible_distribution_version == "17.10"'
+
+- name: Register profile.d scripts.
+  blockinfile:
+    dest: "/home/{{ current_user }}/.profile"
+    block: "{{ lookup('template', 'profile.j2') }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK FOR PROFILES"
