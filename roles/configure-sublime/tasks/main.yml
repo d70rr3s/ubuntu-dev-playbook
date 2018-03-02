@@ -2,7 +2,7 @@
 - name: Check if Package Control is not installed
   stat: path="/home/{{ current_user }}/.config/sublime-text-3/Installed Packages/Package Control.sublime-package"
   register: spc
-  when: 'spc.stat.exists = true'
+  when: 'spc.stat.exists == true'
 
 - name: Download Package Control binary
   get_url:
@@ -11,7 +11,7 @@
     owner: '{{ current_user }}'
     group: '{{ current_user }}'
   register: spc_downloaded
-  when: 'spc.stat.exists = false'
+  when: 'spc.stat.exists == false'
 
 - name: Register packages for download
   template:
@@ -21,4 +21,4 @@
     group: "{{ current_user }}"
     mode: 0744
     force: no
-  when: 'spc.stat.exists = true or spc_downloaded.status = 200'
+  when: 'spc.stat.exists == true or spc_downloaded.status == 200'

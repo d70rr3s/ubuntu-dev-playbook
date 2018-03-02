@@ -79,7 +79,7 @@
     src: '{{ temp_directory }}/jetbrains-toolbox-{{ toolbox_version }}.tar.gz'
     dest: '{{ temp_directory }}'
   notify: install toolboxapp
-  when: '"toolboxapp" in user_applications and toolbox_downloaded is defined and toolbox_downloaded.status = 200'
+  when: '"toolboxapp" in user_applications and toolbox_downloaded is defined and toolbox_downloaded.status == 200'
 
 - name: Check if FZF is already installed
   stat: path="/home/{{ current_user }}/.fzf"
