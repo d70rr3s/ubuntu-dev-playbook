@@ -14,7 +14,7 @@
 
 - name: Download Package Control binary
   get_url:
-    url: 'https://download.jetbrains.com/toolbox/jetbrains-toolbox-{{ toolbox_version }}.tar.gz'
+    url: 'https://packagecontrol.io/Package%20Control.sublime-package'
     dest: '/home/{{ current_user }}/.config/sublime-text-3/Installed Packages/Package Control.sublime-package'
     owner: '{{ current_user }}'
     group: '{{ current_user }}'
