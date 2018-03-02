@@ -2,10 +2,6 @@ function t(){
     tree --dirsfirst --filelimit 45 -L ${1:-3} -C $2
 }
 
-function list() {
-    ls -Alh "$@"
-}
-
 function ports() {
     netstat -tulpn
 }
