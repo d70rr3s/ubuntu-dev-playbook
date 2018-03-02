@@ -21,6 +21,7 @@ installed_extras:
   - java
   - nodejs
   - ruby
+  - yarn
   - docker
   - virtualbox
   - sublime
