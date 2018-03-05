@@ -2,6 +2,7 @@
 - name: Add libraries dependencies
   apt: "name={{ item.name }} state=installed"
   with_items:
+    - { name: qtcreator }
     # Google Chrome dependencies
     - { name: libindicator7, when: '"google-chrome" in user_applications' }
     - { name: libappindicator1, when: '"google-chrome" in user_applications' }
@@ -30,7 +31,7 @@
 
 - name: Register KeyLocks repository
   apt_repository: repo='ppa:tsbarnes/indicator-keylock'
-  when: '"indicator-keylock" in user_applications'
+  when: '"indicator-keylock" in user_applications and ansible_distribution == "Ubuntu" and ansible_distribution_version != "17.10"'
 
 - name: Allow open external links in Google Chrome
   lineinfile:
@@ -76,23 +77,26 @@
     owner: '{{ current_user }}'
     group: '{{ current_user }}'
   register: toolbox_downloaded
-  when: '"toolboxapp" in user_applications and toolbox.matched > 0'
+  when: '"toolboxapp" in user_applications and toolbox.matched == 0'
+  become: no
 
 - name: Extract Toolbox App
   unarchive:
     src: '{{ temp_directory }}/jetbrains-toolbox-{{ toolbox_version }}.tar.gz'
     dest: '{{ temp_directory }}'
   notify: install toolboxapp
-  when: '"toolboxapp" in user_applications and toolbox_downloaded is defined and toolbox_downloaded.status == 200'
+  when: '"toolboxapp" in user_applications and (toolbox_downloaded is defined and (toolbox_downloaded.changed == true or toolbox_downloaded.failed == false))'
+  become: no
 
 - name: Check if FZF is already installed
   stat: path="/home/{{ current_user }}/.fzf"
   register: fzf
-  when: fzf.stat.isdir is defined and fzf.stat.isdir
+  when: '"fzf" in user_applications'
 
 - name: Clone FZF repository
   git:
-    repo: 'https://foosball.example.org/path/to/repo.git'
+    repo: 'https://github.com/junegunn/fzf.git'
     dest: "/home/{{ current_user }}/.fzf"
   notify: install fzf
   when: '"fzf" in user_applications and not fzf.stat.exists'
+  become: no
