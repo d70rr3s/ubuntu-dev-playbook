@@ -2,6 +2,24 @@ function t(){
     tree --dirsfirst --filelimit 45 -L ${1:-3} -C $2
 }
 
+function chmodf() {
+    find ${1:".""} -type f -exec chmod ${2:"0644"} {} \;
+}
+
+function chmodd() {
+    find ${1:"."} -type d -exec chmod ${2:"0755"} {} \;
+}
+
+function vupe() {
+    export DRUPALVM_ENV=${1:"drupalvm"};
+    vagrant up;
+}
+
+function vhle() {
+    export DRUPALVM_ENV=${1:"drupalvm"};
+    vagrant up;
+}
+
 function ports() {
     netstat -tulpn
 }
