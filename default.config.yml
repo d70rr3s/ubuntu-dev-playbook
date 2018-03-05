@@ -7,12 +7,12 @@ hostname: "{{ current_user }}"
 
 # Applications
 user_applications:
-  - battery-monitor
-  - indicator-keylock
+  # - battery-monitor
+  # - indicator-keylock
   - fzf
   - google-chrome-stable
   - putty
-  - terminator
+  # - terminator
   - filezilla
   - toolboxapp   # Jetbrains stack
 
@@ -23,10 +23,10 @@ installed_extras:
   - nodejs
   - ruby
   - yarn
-  - docker
+  # - docker
   - virtualbox
   - sublime
-  - atom
+  # - atom
 
 # Extra packages (add here any OS package you need),
 # keep in mind your OS distribution for some packages.
@@ -40,7 +40,7 @@ extra_packages:
   - pulseaudio
   - meld
   - vim
-  - synapse
+  # - synapse
   - autojump
 
 # Enable basic server security configuration
