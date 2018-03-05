@@ -1,6 +1,8 @@
 ---
 - hosts: all
   become: yes
+  # Uncomment the line below to debug playbook execution
+  # strategy: debug
 
   vars_files:
     - vars/main.yml
