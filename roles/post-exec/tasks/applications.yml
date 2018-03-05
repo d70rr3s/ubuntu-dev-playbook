@@ -14,7 +14,7 @@
 
 - name: Add Battery Monitor repository.
   apt_repository: repo='ppa:maateen/battery-monitor'
-  when: '"battery-monitor" in user_applications'
+  when: '"battery-monitor" in user_applications and ansible_distribution == "Ubuntu" and ansible_distribution_major_version < "17"'
 
 - name: Add Google Chrome repository key
   apt_key:
@@ -31,7 +31,7 @@
 
 - name: Register KeyLocks repository
   apt_repository: repo='ppa:tsbarnes/indicator-keylock'
-  when: '"indicator-keylock" in user_applications and ansible_distribution == "Ubuntu" and ansible_distribution_version != "17.10"'
+  when: '"indicator-keylock" in user_applications and ansible_distribution == "Ubuntu" and ansible_distribution_major_version < "17"'
 
 - name: Allow open external links in Google Chrome
   lineinfile:
