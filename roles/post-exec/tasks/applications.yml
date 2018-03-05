@@ -48,9 +48,18 @@
     - putty-tools
   when: '"putty" in user_applications'
 
+- name: Install Terminator
+  apt: "name=terminator state=installed"
+  when: '"terminator" in user_applications'
+
 - name: Install Filezilla
   apt: "name=filezilla-common state=installed"
   when: '"filezilla" in user_applications'
+
+- name: Install Vagrant plugins
+  command: "vagrant plugin install {{ item }}"
+  with_items: "{{ vagrant_plugins }}"
+  when: 'vagrant_plugins | length > 0 '
 
 - name: Check if Toolbox App is already installed
   find:
@@ -58,11 +67,6 @@
     patterns: '**/jetbrains-toolbox'
   register: toolbox
   when: '"toolboxapp" in user_applications'
-
-- name: Install Vagrant plugins
-  command: "vagrant plugin install {{ item }}"
-  with_items: "{{ vagrant_plugins }}"
-  when: 'vagrant_plugins | length > 0 '
 
 - name: Download Toolbox App
   get_url:

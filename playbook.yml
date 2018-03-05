@@ -51,7 +51,6 @@
       when: '"atom" in installed_extras'
     - { role: KeyboardInterrupt.sublime-text-3, when: '"sublime" in installed_extras' }
     - { role: configure-sublime, when: '"sublime" in installed_extras' }
-    - { role: gantsign.terminator, when: '"terminator" in installed_extras' }
     - { role: Oefenweb.yarn, when: '"yarn" in installed_extras' }
 
     # Roles for security and stability.

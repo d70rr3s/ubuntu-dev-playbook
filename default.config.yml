@@ -12,6 +12,7 @@ user_applications:
   - fzf
   - google-chrome-stable
   - putty
+  - terminator
   - filezilla
   - toolboxapp   # Jetbrains stack
 
@@ -26,7 +27,6 @@ installed_extras:
   - virtualbox
   - sublime
   - atom
-  - terminator
 
 # Extra packages (add here any OS package you need),
 # keep in mind your OS distribution for some packages.
