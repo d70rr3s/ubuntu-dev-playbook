@@ -26,7 +26,7 @@
 
 - name: Set up Vim configuration
   template:
-    src: .vimrc.j2
+    src: vimrc.j2
     dest: "/home/{{ current_user }}/.vimrc"
     owner: "{{ current_user }}"
     group: "{{ current_user }}"
