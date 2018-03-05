@@ -1,6 +1,6 @@
 ---
 - name: install fzf
-  script: "/home/{{ current_user }}/.fzf/install"
+  script: "/home/{{ current_user }}/.fzf/install -y"
 
 - name: install toolboxapp
   script: '{{ temp_directory }}/jetbrains-toolbox-{{ toolbox_version }}/jetbrains-toolbox'
