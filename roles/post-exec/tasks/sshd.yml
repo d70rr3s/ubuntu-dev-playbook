@@ -13,5 +13,11 @@
     create: yes
     regexp: "^SSH_HOME="
     line: "SSH_HOME={{ ssh_home }} && [ -e $SSH_HOME ] && cd $SSH_HOME"
-  become: no
   when: ssh_home is defined
+  become: no
+
+- name: Ensure X display option is enabled for ssh
+  blockinfile:
+    dest: "/etc/ssh/sshd_config"
+    block: "{{ lookup('template', 'sshd_config.j2') }}"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK FOR X11"
