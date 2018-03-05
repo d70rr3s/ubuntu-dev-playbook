@@ -46,3 +46,23 @@
     dest: "/home/{{ current_user }}/.profile"
     block: "{{ lookup('template', 'profile.j2') }}"
     marker: "# {mark} ANSIBLE MANAGED BLOCK FOR PROFILES"
+  become: no
+
+- name: Ensure .temp directory is clean
+  file:
+    state: "{{ item }}"
+    path: "{{ temp_directory }}/"
+    mode: '0744'
+  with_items:
+    - absent
+    - directory
+  become: no
+
+- name: Allow root to run X display from terminal.
+  template:
+    src: xhost.desktop.j2
+    dest: "/home/{{ current_user }}/.config/autostart/xhost.desktop"
+    owner: "{{ current_user }}"
+    group: "{{ current_user }}"
+    mode: 0664
+  become: no
