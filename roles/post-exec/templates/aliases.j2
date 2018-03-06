@@ -11,13 +11,13 @@ function chmodd() {
 }
 
 function vupe() {
-    export DRUPALVM_ENV=${1:-'drupalvm'};
+    export DRUPALVM_ENV=${@:-'drupalvm'};
     vagrant up;
 }
 
 function vhle() {
-    export DRUPALVM_ENV=${1:-'drupalvm'};
-    vagrant up;
+    export DRUPALVM_ENV=${@:-'drupalvm'};
+    vagrant halt;
 }
 
 function ports() {
@@ -25,7 +25,7 @@ function ports() {
 }
 
 function ssh-copy-key() {
-  xclip -sel clip < ~/.ssh/${1:-'id_rsa'}.pub
+  xclip -sel clip < ~/.ssh/${@:-'id_rsa'}.pub
 }
 
 function gi() {
