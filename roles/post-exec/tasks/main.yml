@@ -56,6 +56,8 @@
 - include: applications.yml
   when: user_applications|length > 0
 
+- include: vagrant.yml
+
 - include: sshd.yml
 
 - include: cron.yml

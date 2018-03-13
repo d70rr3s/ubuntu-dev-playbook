@@ -57,11 +57,6 @@
   apt: "name=filezilla-common state=installed"
   when: '"filezilla" in user_applications'
 
-- name: Install Vagrant plugins
-  command: "vagrant plugin install {{ item }}"
-  with_items: "{{ vagrant_plugins }}"
-  when: 'vagrant_plugins | length > 0 '
-
 - name: Check if Toolbox App is already installed
   find:
     paths: '/home/{{ current_user }},/usr/bin,/usr/local/bin,/opt'

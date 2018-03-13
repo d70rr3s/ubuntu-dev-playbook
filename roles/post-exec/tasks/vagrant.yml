@@ -1,0 +1,17 @@
+---
+- name: Install Vagrant plugins
+  command: "vagrant plugin install {{ item }}"
+  with_items: "{{ vagrant_plugins }}"
+  when: 'vagrant_plugins | length > 0 '
+
+- name: Allow Vagrant to run NFS passwordless
+  template:
+    src: vagrant-syncedfolders.j2
+    dest: "/etc/sudoers.d/vagrant-syncedfolders"
+    mode: 0744
+
+- name: Allow Vagrant to modify hosts file
+  template:
+    src: vagrant_hostsupdater.j2
+    dest: "/etc/sudoers.d/vagrant_hostsupdater"
+    mode: 0744
