@@ -1,3 +1,11 @@
+function pwoff() {
+    shutdown -h -t ${@:-10} -m "System shutdown sequence initiated!";
+}
+
+function restart() {
+    shutdown -r -t 5 -m "System rebooting!";
+}
+
 function t(){
     tree --dirsfirst --filelimit 45 -L ${1:-3} -C $2
 }
@@ -13,6 +21,11 @@ function chmodd() {
 function vupe() {
     export DRUPALVM_ENV=${@:-'drupalvm'};
     vagrant up;
+}
+
+function vssh() {
+    export DRUPALVM_ENV=${@:-'drupalvm'};
+    vargant ssh;
 }
 
 function vhle() {
