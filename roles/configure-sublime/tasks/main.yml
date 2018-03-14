@@ -1,4 +1,26 @@
 ---
+- block:
+    - name: "Checking Sublime directories state"
+      stat:
+        path: "{{item}}"
+      register: folder_stats
+      with_items:
+        - "/home/{{ current_user }}/.config/sublime-text-3"
+        - "/home/{{ current_user }}/.config/sublime-text-3/Packages"
+        - "/home/{{ current_user }}/.config/sublime-text-3/Packages/User"
+        - "/home/{{ current_user }}/.config/sublime-text-3/Installed Packages"
+
+    - name: "Create directories if they do not exists"
+      file:
+        path: "{{item.item}}"
+        state: directory
+        mode: 0755
+        group: root
+        owner: root
+      when: item.stat.exists == false
+      with_items:
+      - "{{folder_stats.results}}"
+
 - name: Ensure preferences are set in place
   template:
     src: Preferences.sublime-settings.j2
