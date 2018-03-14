@@ -1,9 +1,9 @@
 function pwoff() {
-    shutdown -h -t ${@:-10} -m "System shutdown sequence initiated!";
+    shutdown -h -t now;
 }
 
 function restart() {
-    shutdown -r -t 5 -m "System rebooting!";
+    shutdown -r -t now;
 }
 
 function t(){
