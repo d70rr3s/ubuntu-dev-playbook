@@ -1,6 +1,6 @@
 ---
 - name: install fzf
-  script: "/home/{{ current_user }}/.fzf/install -y"
+  script: "/home/{{ current_user }}/.fzf/install --all --64"
   become: no
 
 - name: install toolboxapp
