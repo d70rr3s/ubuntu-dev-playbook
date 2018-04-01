@@ -17,11 +17,13 @@ You can run this playbook using a installer script (**recommended**) or manually
 Clone or download this repository, edit the *default.config.yml* file and run the following command from the :
 ```bash
 mkdir -p ~/.temp
+ansible-galaxy install -r requirements.yml
 ansible-playbook -i "localhost," -c local -K playbook.yml
 ```
 Or, you can set the required vars directly in the command line:
 ```bash
 mkdir -p ~/.temp
+ansible-galaxy install -r requirements.yml
 ansible-playbook -i "localhost," -c local -K playbook.yml --extra-vars "current_user=USERNAME git_fullname='YOUR_NAME' git_email='YOUR_EMAIL' installed_extras=[COMMA_DELIMITED_PACKAGES_NAMES]"
 ```
 *__Note__: See *default.config.yml* file for var details and [read the docs](http://docs.ansible.com/playbooks_variables.html#passing-variables-on-the-command-line) for more information about passing vars through the command line*
