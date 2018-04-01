@@ -24,6 +24,14 @@
     group: "{{ current_user }}"
     mode: 0744
 
+- name: Set up Git commit message template
+  template:
+    src: gitmessage.j2
+    dest: "/home/{{ current_user }}/.gitmessage"
+    owner: "{{ current_user }}"
+    group: "{{ current_user }}"
+    mode: 0744
+
 - name: Set up Vim configuration
   template:
     src: vimrc.j2
