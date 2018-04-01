@@ -15,11 +15,12 @@
         path: "{{item.item}}"
         state: directory
         mode: 0755
-        group: root
-        owner: root
+        owner: "{{ current_user }}"
+        group: "{{ current_user }}"
       when: item.stat.exists == false
       with_items:
-      - "{{folder_stats.results}}"
+        - "{{folder_stats.results}}"
+      become: no
 
 - name: Ensure preferences are set in place
   template:
