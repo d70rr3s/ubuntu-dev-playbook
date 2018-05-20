@@ -64,6 +64,8 @@
 - include: applications.yml
   when: user_applications|length > 0
 
+- include: firefox-de.yml
+
 - include: vagrant.yml
 
 - include: sshd.yml

@@ -1,0 +1,73 @@
+---
+- name: Check if Firefox DE is installed
+  find:
+    paths: '/usr/bin,/usr/local/bin'
+    patterns: '**/firefox-de'
+  register: firefox_de
+  when: '"firefox-de" in user_applications'
+
+- name: Cleanup any previous downloads for Firefox DE
+  file:
+    path: "{{ item }}"
+    state: absent
+  when: firefox_de.matched == 0
+  with_items:
+    - '{{ temp_directory }}/firefox-de.tar.bz2'
+    - '{{ firefox_de_directory }}/firefox'
+    - '/usr/local/bin/firefox-de'
+  become: yes
+
+- name: Download Firefox DE latest version
+  get_url:
+    url: '{{ firefox_de_url }}'
+    dest: '{{ temp_directory }}/firefox-de.tar.bz2'
+    owner: '{{ current_user }}'
+    group: '{{ current_user }}'
+  register: firefox_de_downloaded
+  when: '"firefox-de" in user_applications and firefox_de.matched == 0'
+  become: no
+
+- name: Extract Firefox DE version
+  unarchive:
+    src: '{{ temp_directory }}/firefox-de.tar.bz2'
+    dest: '{{ firefox_de_directory }}'
+  when: '"firefox-de" in user_applications and (firefox_de_downloaded is defined and (firefox_de_downloaded.changed == true or firefox_de_downloaded.failed == false))'
+  become: yes
+
+- name: Check if Firefox DE binary is in place
+  stat: path="{{ firefox_de_directory }}/firefox/firefox"
+  register: firefox_de_binary
+  when: '"firefox-de" in user_applications and firefox_de.matched == 0'
+  become: yes
+
+- name: Register Firefox DE binary
+  file:
+    src: '{{ firefox_de_directory }}/firefox/firefox'
+    dest: "/usr/local/bin/firefox-de"
+    state: link
+  when: '"firefox-de" in user_applications and firefox_de.matched == 0'
+  become: yes
+
+- name: Register Firefox DE version
+  shell: "cat {{ firefox_de_directory }}/firefox/application.ini | grep -e '^Version' | awk -F '=' '{print $2}'"
+  register: firefox_de_version
+  when: '"firefox-de" in user_applications'
+  become: yes
+
+- name: Create Firefox DE desktop entry
+  block:
+    - name: Global desktop entry
+      template:
+        src: firefox-de.desktop.j2
+        dest: "/usr/share/applications/firefox-de.desktop"
+        mode: 0644
+      when: '"firefox-de" in user_applications'
+      become: yes
+
+    - name: Current user desktop entry
+      template:
+        src: firefox-de.desktop.j2
+        dest: "/home/{{ current_user }}/Desktop/firefox-de.desktop"
+        mode: 0644
+      when: '"firefox-de" in user_applications'
+      become: no

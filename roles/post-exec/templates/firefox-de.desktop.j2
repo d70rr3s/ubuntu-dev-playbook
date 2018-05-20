@@ -1,0 +1,22 @@
+[Desktop Entry]
+Version={{ firefox_de_version }}
+Name=Firefox Developer Edition
+GenericName=Web Browser
+Keywords=Internet;WWW;Browser;Web;Explorer
+Exec={{ firefox_de_directory }}/firefox/firefox %U
+Terminal=false
+Type=Application
+X-MultipleArgs=false
+Icon={{ firefox_de_directory }}/firefox/browser/chrome/icons/default/default128.png
+Categories=GNOME;GTK;Network;WebBrowser;
+MimeType=text/html;text/xml;application/xhtml+xml;application/xml;application/rss+xml;application/rdf+xml;image/gif;image/jpeg;image/png;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;x-scheme-handler/chrome;video/webm;application/x-xpinstall;
+StartupNotify=true
+Actions=normal;private;
+
+[Desktop Action normal]
+Name=Open a New Window
+Exec={{ firefox_de_directory }}/firefox/firefox %U -new-window
+
+[Desktop Action private]
+Name=Open a New Private Window
+Exec={{ firefox_de_directory }}/firefox/firefox %U -private-window

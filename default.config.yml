@@ -11,6 +11,7 @@ user_applications:
   # - indicator-keylock
   - fzf
   - google-chrome-stable
+  - firefox-de
   - putty
   # - terminator
   - filezilla

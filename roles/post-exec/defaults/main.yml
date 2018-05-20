@@ -12,3 +12,5 @@ vagrant_plugins:
   - vagrant-vbguest
   - vagrant-exec
   - vagrant-hostsupdater
+firefox_de_url: 'https://download.mozilla.org/?product=firefox-devedition-latest-ssl&os=linux64&lang=en-US'
+firefox_de_directory: '/opt'
