@@ -42,6 +42,7 @@ extra_packages:
   - vim
   # - synapse
   - autojump
+  - xclip
 
 # Enable basic server security configuration
 extra_security_enabled: true
