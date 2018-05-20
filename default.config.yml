@@ -9,6 +9,7 @@ hostname: "{{ current_user }}"
 user_applications:
   # - battery-monitor
   - indicator-keylock
+  - clipboard-manager   # Ubuntu >= 17
   - fzf
   - google-chrome-stable
   - firefox-de

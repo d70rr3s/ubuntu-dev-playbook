@@ -55,6 +55,22 @@
       become: no
   when: '"indicator-keylock" in user_applications and ansible_distribution == "Ubuntu" and ansible_distribution_major_version > "16"'
 
+- name: Install clipboard manager GNOME shell extension (Ubuntu >= 17)
+  block:
+    - name: Cleanup any previous downloads
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - '/home/{{ current_user }}/.local/share/gnome-shell/extensions/clipboard-indicator@tudmotu.com'
+      become: yes
+    - name: Clone extension respository
+      git:
+        repo: 'https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator.git'
+        dest: '/home/{{ current_user }}/.local/share/gnome-shell/extensions/clipboard-indicator@tudmotu.com'
+      become: no
+  when: '"clipboard-manager" in user_applications and ansible_distribution == "Ubuntu" and ansible_distribution_major_version > "16"'
+
 - name: Allow open external links in Google Chrome
   lineinfile:
     path: "/home/{{ current_user }}/.local/share/applications/google-chrome.desktop"
