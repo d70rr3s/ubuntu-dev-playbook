@@ -8,7 +8,7 @@ hostname: "{{ current_user }}"
 # Applications
 user_applications:
   # - battery-monitor
-  # - indicator-keylock
+  - indicator-keylock
   - fzf
   - google-chrome-stable
   - firefox-de

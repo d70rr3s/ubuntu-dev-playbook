@@ -29,9 +29,31 @@
     filename: "google-chrome-stable"
   when: '"google-chrome" in user_applications'
 
-- name: Register KeyLocks repository
+- name: Register KeyLocks repository (Ubuntu < 17)
   apt_repository: repo='ppa:tsbarnes/indicator-keylock'
   when: '"indicator-keylock" in user_applications and ansible_distribution == "Ubuntu" and ansible_distribution_major_version < "17"'
+
+- name: Install KeysIndicator GNOME shell extension (Ubuntu >= 17)
+  block:
+    - name: Cleanup any previous downloads
+      file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - '{{ temp_directory }}/gnome-shell-extension-KeysIndicator'
+        - '/home/{{ current_user }}/.local/share/gnome-shell/extensions/keys-indicator@caasiu.github.com'
+      become: yes
+    - name: Clone extension respository
+      git:
+        repo: 'https://github.com/caasiu/gnome-shell-extension-KeysIndicator.git'
+        dest: '{{ temp_directory }}/gnome-shell-extension-KeysIndicator'
+      become: no
+    - name: Copy extension folder
+      copy:
+        src: '{{ temp_directory }}/gnome-shell-extension-KeysIndicator/keys-indicator@caasiu.github.com'
+        dest: '/home/{{ current_user }}/.local/share/gnome-shell/extensions/keys-indicator@caasiu.github.com'
+      become: no
+  when: '"indicator-keylock" in user_applications and ansible_distribution == "Ubuntu" and ansible_distribution_major_version > "16"'
 
 - name: Allow open external links in Google Chrome
   lineinfile:
